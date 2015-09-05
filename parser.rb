@@ -818,12 +818,12 @@ ng<br>Polar Robotics President</div></div></div></div>
 
 --089e0102f0363cfac0051ee34a75--
 "
-
+=begin
 require 'gmail'
 
 data = ""
 
-gmail = Gmail.connect("betterstudentl@gmail.com", "password")
+gmail = Gmail.connect("betterstudentl@gmail.com", "merpmerpmerp")
 
 if gmail.logged_in?
     gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
@@ -833,6 +833,8 @@ if gmail.logged_in?
 end
 
 gmail.logout
+
+=end
 
 if data.length > 0 
     message = data.split(/----------------------------------------------------------------------(<br>)?\s\sMessage-ID:/i)
@@ -878,9 +880,16 @@ if data.length > 0
     
           <!--Let browser know website is optimized for mobile-->
           <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         </head>
-      
-          <ul id="slide-out" class="side-nav fixed">'
+        
+        <nav class="top-nav blue-grey darken-1 flow-text">
+          <div class="container">
+            <div class="nav-wrapper"><a class="page-title">A Better Student L Digest</a></div>
+          </div>
+        </nav>
+        
+        <ul id="slide-out" class="side-nav fixed">'
           
     html_sidebar = ""
     
@@ -889,11 +898,12 @@ if data.length > 0
     }
       
     html_middle_part = '</ul>
-      <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>  
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="medium material-icons"></i></a>  
       
         <div class="container">
             <div class="row">
-                <div class="col l12">'
+                <div class="col s0 l3">&nbsp</div>
+                <div class="col s12 l6">'
                 
                 
     html_content = ''            
@@ -906,10 +916,6 @@ if data.length > 0
                 <div class="card-content white-text">
                     <span class="card-title"><strong>'+content[:subject]+'</strong></span>
                     <p>'+this_message[:message]+'</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                  <a href="#">This is a link</a>
                 </div>
             </div>'
     }
@@ -928,6 +934,12 @@ if data.length > 0
           <script type="text/javascript">
               // Initialize collapse button
               $(".button-collapse").sideNav();
+              $(document).ready(function(){
+                    $("a").click(function(){
+                        // Hide sideNav
+                        $(".button-collapse").sideNav("hide");
+                    });
+                });
           </script>
         </body>
       </html>'
