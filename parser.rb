@@ -819,107 +819,122 @@ ng<br>Polar Robotics President</div></div></div></div>
 --089e0102f0363cfac0051ee34a75--
 "
 
+require 'gmail'
 
+data = ""
 
-message = data.split(/----------------------------------------------------------------------(<br>)?\s\sMessage-ID:/i)
-table_of_contents = message[0].split( /Table of contents:\s\s/i)[1].split("* ")
-# remove the first value which is blank
-table_of_contents.shift
-array_of_contents = message[1].split("End of onu-student-ld Digest")[0]
-array_of_contents = array_of_contents.split(/------------------------------(<br>)?\sMessage-ID:/i)
+gmail = Gmail.connect("betterstudentl@gmail.com", "password")
 
+if gmail.logged_in?
+    gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
+        data = email.body.to_s
+        email.read!
+    }
+end
 
-table_of_contents.map!{ |content|
-   # put each index on one line
-   content.gsub!("\n  ","")
-   
-   # remove the number and the contact
-   sections = content.split(" - ")
-   
-   number = sections.slice!(0)
-   contact = sections.slice!(-1)
-   subject = sections.join
-   
-   content = {:number => number, :subject => subject, :contact => contact}
-}
+gmail.logout
 
-
-array_of_contents.map! { |content|
-    sub_message = content.split(/(?<=\n\n)/)
-    header = sub_message[0]
-    sub_message.shift
-    sub_message = sub_message.join
-    sub_message.gsub!("------------------------------*********************************************","")
-    sub_message.gsub!(/(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/, '<a href="\1">This Link</a>')
-    content = {:header => header, :message => sub_message}
+if data.length > 0 
+    message = data.split(/----------------------------------------------------------------------(<br>)?\s\sMessage-ID:/i)
+    table_of_contents = message[0].split( /Table of contents:\s\s/i)[1].split("* ")
+    # remove the first value which is blank
+    table_of_contents.shift
+    array_of_contents = message[1].split("End of onu-student-ld Digest")[0]
+    array_of_contents = array_of_contents.split(/------------------------------(<br>)?\sMessage-ID:/i)
     
-}
-
-html_header = '<!DOCTYPE html>
-  <html>
-    <head>
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
-
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-  
-      <ul id="slide-out" class="side-nav fixed">'
-      
-html_sidebar = ""
-
-table_of_contents.map{ |content|
-    html_sidebar += '<li><a href="#'+content[:number]+'">'+content[:subject]+'</a></li>'
-}
-  
-html_middle_part = '</ul>
-  <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>  
-  
-    <div class="container">
-        <div class="row">
-            <div class="col l12">'
-            
-            
-html_content = ''            
-
-puts array_of_contents
-
-array_of_contents.map.with_index{ |this_message, i|
-    content = table_of_contents.at(i);
-    html_content += '<div id="#'+content[:number]+'" class="card blue-grey darken-1">
-            <div class="card-content white-text">
-                <span class="card-title"><strong>'+content[:subject]+'</strong></span>
-                <p>'+this_message[:message]+'</p>
-            </div>
-            <div class="card-action">
-              <a href="#">This is a link</a>
-              <a href="#">This is a link</a>
-            </div>
-        </div>'
-}
-            
-            
-
-html_footer = '</div>
-        </div>
+    
+    table_of_contents.map!{ |content|
+       # put each index on one line
+       content.gsub!("\n  ","")
+       
+       # remove the number and the contact
+       sections = content.split(" - ")
+       
+       number = sections.slice!(0)
+       contact = sections.slice!(-1)
+       subject = sections.join
+       
+       content = {:number => number, :subject => subject, :contact => contact}
+    }
+    
+    
+    array_of_contents.map! { |content|
+        sub_message = content.split(/(?<=\n\n)/)
+        header = sub_message[0]
+        sub_message.shift
+        sub_message = sub_message.join
+        sub_message.gsub!("------------------------------*********************************************","")
+        sub_message.gsub!(/(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/, '<a href="\1">This Link</a>')
+        content = {:header => header, :message => sub_message}
         
-    </div>
-
-    <body>
-      <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-      <script type="text/javascript">
-          // Initialize collapse button
-          $(".button-collapse").sideNav();
-      </script>
-    </body>
-  </html>'
-  
-
-  
-  html = html_header + html_sidebar + html_middle_part + html_content + html_footer
-  
-  File.open("betterstudentl/index.html", 'w') { |file| file.write(html) }
+    }
+    
+    html_header = '<!DOCTYPE html>
+      <html>
+        <head>
+          <!--Import materialize.css-->
+          <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+          <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+    
+          <!--Let browser know website is optimized for mobile-->
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </head>
+      
+          <ul id="slide-out" class="side-nav fixed">'
+          
+    html_sidebar = ""
+    
+    table_of_contents.map{ |content|
+        html_sidebar += '<li><a class="truncate" href="#'+content[:number]+'">'+content[:subject]+'</a></li>'
+    }
+      
+    html_middle_part = '</ul>
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>  
+      
+        <div class="container">
+            <div class="row">
+                <div class="col l12">'
+                
+                
+    html_content = ''            
+    
+    puts array_of_contents
+    
+    array_of_contents.map.with_index{ |this_message, i|
+        content = table_of_contents.at(i);
+        html_content += '<div id="'+content[:number]+'" class="card blue-grey darken-1 hoverable">
+                <div class="card-content white-text">
+                    <span class="card-title"><strong>'+content[:subject]+'</strong></span>
+                    <p>'+this_message[:message]+'</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                  <a href="#">This is a link</a>
+                </div>
+            </div>'
+    }
+                
+                
+    
+    html_footer = '</div>
+            </div>
+            
+        </div>
+    
+        <body>
+          <!--Import jQuery before materialize.js-->
+          <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+          <script type="text/javascript" src="js/materialize.min.js"></script>
+          <script type="text/javascript">
+              // Initialize collapse button
+              $(".button-collapse").sideNav();
+          </script>
+        </body>
+      </html>'
+      
+    
+      
+      html = html_header + html_sidebar + html_middle_part + html_content + html_footer
+      
+      File.open("index.html", 'w') { |file| file.write(html) }
+end
