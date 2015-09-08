@@ -818,135 +818,179 @@ ng<br>Polar Robotics President</div></div></div></div>
 
 --089e0102f0363cfac0051ee34a75--
 "
-=begin
+
 require 'gmail'
 
-data = ""
-
-gmail = Gmail.connect("betterstudentl@gmail.com", "merpmerpmerp")
-
-if gmail.logged_in?
-    gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
-        data = email.body.to_s
-        email.read!
-    }
-end
-
-gmail.logout
-
-=end
-
-if data.length > 0 
-    message = data.split(/----------------------------------------------------------------------(<br>)?\s\sMessage-ID:/i)
-    table_of_contents = message[0].split( /Table of contents:\s\s/i)[1].split("* ")
-    # remove the first value which is blank
-    table_of_contents.shift
-    array_of_contents = message[1].split("End of onu-student-ld Digest")[0]
-    array_of_contents = array_of_contents.split(/------------------------------(<br>)?\sMessage-ID:/i)
+while true
+    
+    data = ""
+    
+    gmail = Gmail.connect("betterstudentl@gmail.com", "password_goes_here")
+    
+    if gmail.logged_in?
+        gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
+            puts "Processing new message at " + Time.now.to_s
+            data = email.body.to_s
+            email.read!
+        }
+    end
+    
+    gmail.logout
     
     
-    table_of_contents.map!{ |content|
-       # put each index on one line
-       content.gsub!("\n  ","")
-       
-       # remove the number and the contact
-       sections = content.split(" - ")
-       
-       number = sections.slice!(0)
-       contact = sections.slice!(-1)
-       subject = sections.join
-       
-       content = {:number => number, :subject => subject, :contact => contact}
-    }
-    
-    
-    array_of_contents.map! { |content|
-        sub_message = content.split(/(?<=\n\n)/)
-        header = sub_message[0]
-        sub_message.shift
-        sub_message = sub_message.join
-        sub_message.gsub!("------------------------------*********************************************","")
-        sub_message.gsub!(/(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/, '<a href="\1">This Link</a>')
-        content = {:header => header, :message => sub_message}
+    if data.length > 0 
+        message = data.split(/----------------------------------------------------------------------(<br>)?\s\sMessage-ID:/i)
+        table_of_contents = message[0].split( /Table of contents:\s\s/i)[1].split("* ")
+        # remove the first value which is blank
+        table_of_contents.shift
+        array_of_contents = message[1].split("End of onu-student-ld Digest")[0]
+        array_of_contents = array_of_contents.split(/------------------------------(<br>)?\sMessage-ID:/i)
         
-    }
-    
-    html_header = '<!DOCTYPE html>
-      <html>
-        <head>
-          <!--Import materialize.css-->
-          <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-          <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
-    
-          <!--Let browser know website is optimized for mobile-->
-          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        </head>
         
-        <nav class="top-nav blue-grey darken-1 flow-text">
-          <div class="container">
-            <div class="nav-wrapper"><a class="page-title">A Better Student L Digest</a></div>
-          </div>
-        </nav>
+        table_of_contents.map!{ |content|
+           # put each index on one line
+           content.gsub!("\n  ","")
+           
+           # remove the number and the contact
+           sections = content.split(" - ")
+           
+           number = sections.slice!(0)
+           contact = sections.slice!(-1)
+           subject = sections.join
+           
+           content = {:number => number, :subject => subject, :contact => contact}
+        }
         
-        <ul id="slide-out" class="side-nav fixed">'
-          
-    html_sidebar = ""
-    
-    table_of_contents.map{ |content|
-        html_sidebar += '<li><a class="truncate" href="#'+content[:number]+'">'+content[:subject]+'</a></li>'
-    }
-      
-    html_middle_part = '</ul>
-      <a href="#" data-activates="slide-out" class="button-collapse"><i class="medium material-icons"></i></a>  
-      
-        <div class="container">
-            <div class="row">
-                <div class="col s0 l3">&nbsp</div>
-                <div class="col s12 l6">'
-                
-                
-    html_content = ''            
-    
-    puts array_of_contents
-    
-    array_of_contents.map.with_index{ |this_message, i|
-        content = table_of_contents.at(i);
-        html_content += '<div id="'+content[:number]+'" class="card blue-grey darken-1 hoverable">
-                <div class="card-content white-text">
-                    <span class="card-title"><strong>'+content[:subject]+'</strong></span>
-                    <p>'+this_message[:message]+'</p>
-                </div>
-            </div>'
-    }
-                
-                
-    
-    html_footer = '</div>
-            </div>
+        
+        array_of_contents.map! { |content|
+            sub_message = content.split(/(?<=\n\n)/)
+            header = sub_message[0]
+            sub_message.shift
+            sub_message = sub_message.join
+            sub_message.gsub!("------------------------------*********************************************","")
             
-        </div>
-    
-        <body>
-          <!--Import jQuery before materialize.js-->
-          <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-          <script type="text/javascript" src="js/materialize.min.js"></script>
-          <script type="text/javascript">
-              // Initialize collapse button
-              $(".button-collapse").sideNav();
-              $(document).ready(function(){
-                    $("a").click(function(){
-                        // Hide sideNav
-                        $(".button-collapse").sideNav("hide");
+            split_message = sub_message.split(/\n/);
+            
+            index = 0
+            result_string = ""
+            
+            while index < split_message.length
+                current_line = split_message[index]
+                result_string += current_line
+                if index + 1 < split_message.length
+                    next_line = split_message[index + 1]
+                    next_line = next_line.split()
+                    if current_line[-1, 1] == '='
+                        current_line.slice!(-1)
+                        result_string.slice!(-1)
+                        if next_line.length == 1
+                            current_line += next_line[0]
+                            result_string += next_line[0] + " "
+                            index += 1
+                            if index < split_message.length
+                                next_line = split_message[index]
+                                next_line = next_line.split
+                            else
+                                next_line = [""]
+                            end
+                        end
+                    end
+                    if current_line.length + 1 + next_line[0].to_s.length < 76
+                        result_string += "\n" 
+                    else
+                        result_string += " "
+                    end
+                end
+                
+                index += 1
+                
+            end
+            
+            
+            result_string.gsub!(/((http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?)/, '<a href="\1">This Link</a>')
+            result_string.gsub!(/=E2=80=99/,"'")
+            content = {:header => header, :message => result_string}
+            
+        }
+        
+        html_header = '<!DOCTYPE html>
+          <html>
+            <head>
+              <!--Import materialize.css-->
+              <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+              <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+        
+              <!--Let browser know website is optimized for mobile-->
+              <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+              <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            </head>
+            
+            <nav class="top-nav orange darken-3 flow-text">
+              <div class="container">
+                <div class="nav-wrapper"><a class="page-title">A Better Student L Digest</a></div>
+              </div>
+            </nav>
+            
+            <ul id="slide-out" class="side-nav fixed">'
+              
+        html_sidebar = ""
+        
+        table_of_contents.map{ |content|
+            html_sidebar += '<li><a class="truncate" href="#'+content[:number]+'">'+content[:subject]+'</a></li>'
+        }
+          
+        html_middle_part = '</ul>
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class="medium material-icons"></i></a>  
+          
+            <div class="container">
+                <div class="row">
+                    <div class="col s0 l3">&nbsp</div>
+                    <div class="col s12 l6">'
+                    
+                    
+        html_content = ''            
+        
+        
+        array_of_contents.map.with_index{ |this_message, i|
+            content = table_of_contents.at(i);
+            html_content += '<div id="'+content[:number]+'" class="card orange darken-3 hoverable">
+                    <div class="card-content white-text">
+                        <span class="card-title"><strong>'+content[:subject]+'</strong></span>
+                        <p>'+this_message[:message]+'</p>
+                    </div>
+                </div>'
+        }
+                    
+                    
+        
+        html_footer = '</div>
+                </div>
+                
+            </div>
+        
+            <body>
+              <!--Import jQuery before materialize.js-->
+              <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+              <script type="text/javascript" src="js/materialize.min.js"></script>
+              <script type="text/javascript">
+                  // Initialize collapse button
+                  $(".button-collapse").sideNav();
+                  $(document).ready(function(){
+                        $("a").click(function(){
+                            // Hide sideNav
+                            $(".button-collapse").sideNav("hide");
+                        });
                     });
-                });
-          </script>
-        </body>
-      </html>'
-      
+              </script>
+            </body>
+          </html>'
+          
+        
+          
+          html = html_header + html_sidebar + html_middle_part + html_content + html_footer
+          
+          File.open("index.html", 'w') { |file| file.write(html) }
+    end
     
-      
-      html = html_header + html_sidebar + html_middle_part + html_content + html_footer
-      
-      File.open("index.html", 'w') { |file| file.write(html) }
+    sleep(60)
 end
