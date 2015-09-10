@@ -4,4 +4,13 @@ p {
 
 html {
     background-color: #E9EAED;
+    /*background-color: #ef6c00;*/
+}
+
+.side-nav a{
+    width: 240px;
+}
+
+#staggered-test li {
+    opacity: 0;
 }

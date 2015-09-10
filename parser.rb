@@ -822,21 +822,24 @@ ng<br>Polar Robotics President</div></div></div></div>
 require 'gmail'
 
 while true
-    
     data = ""
     
-    gmail = Gmail.connect("betterstudentl@gmail.com", "password_goes_here")
-    
+    gmail = Gmail.connect("betterstudentl@gmail.com", "passwordgoeshere")
+    puts "Checking at..." + Time.now.to_s
     if gmail.logged_in?
-        gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
+        puts "Logged in successfully!"
+        
+         gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
+        #gmail.inbox.emails(:unread, :from => "onu-student-ld-request@lists.onu.edu").each { |email|
             puts "Processing new message at " + Time.now.to_s
             data = email.body.to_s
             email.read!
         }
+    else
+        puts "Could not log in..."
     end
     
     gmail.logout
-    
     
     if data.length > 0 
         message = data.split(/----------------------------------------------------------------------(<br>)?\s\sMessage-ID:/i)
@@ -906,9 +909,12 @@ while true
                 
             end
             
-            
-            result_string.gsub!(/((http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?)/, '<a href="\1">This Link</a>')
+            # replace links with buttons
+            result_string.gsub!(/((http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?)/, '<a href="\1" class="waves-effect orange waves-light btn black-text">This Link</a>')
+            # ugly patches
+            # replace this string with the single quote
             result_string.gsub!(/=E2=80=99/,"'")
+            
             content = {:header => header, :message => result_string}
             
         }
@@ -923,20 +929,19 @@ while true
               <!--Let browser know website is optimized for mobile-->
               <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
               <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+              <title>A Better Student L Digest</title>
             </head>
-            
-            <nav class="top-nav orange darken-3 flow-text">
-              <div class="container">
-                <div class="nav-wrapper"><a class="page-title">A Better Student L Digest</a></div>
-              </div>
-            </nav>
-            
+                <nav class="top-nav orange flow-text">
+                  <div class="container">
+                    <div class="nav-wrapper"><a class="page-title black-text"><strong>A Better Student L Digest</strong></a></div>
+                  </div>
+                </nav>
             <ul id="slide-out" class="side-nav fixed">'
               
         html_sidebar = ""
         
         table_of_contents.map{ |content|
-            html_sidebar += '<li><a class="truncate" href="#'+content[:number]+'">'+content[:subject]+'</a></li>'
+            html_sidebar += '<li class="waves-effect waves-orange no-padding"><a class="truncate" href="#'+content[:number]+'">'+content[:subject]+'</a></li>'
         }
           
         html_middle_part = '</ul>
@@ -945,7 +950,8 @@ while true
             <div class="container">
                 <div class="row">
                     <div class="col s0 l3">&nbsp</div>
-                    <div class="col s12 l6">'
+                    <div class="col s12 l6">
+                    <ul id="staggered-test">'
                     
                     
         html_content = ''            
@@ -953,17 +959,19 @@ while true
         
         array_of_contents.map.with_index{ |this_message, i|
             content = table_of_contents.at(i);
-            html_content += '<div id="'+content[:number]+'" class="card orange darken-3 hoverable">
-                    <div class="card-content white-text">
-                        <span class="card-title"><strong>'+content[:subject]+'</strong></span>
+            html_content += '<li><div id="'+content[:number]+'" class="card hoverable">
+            <div class="card-title black-text orange center-align">
+                <span>'+content[:subject]+'</span>
+            </div>
+                    <div class="card-content">
                         <p>'+this_message[:message]+'</p>
                     </div>
-                </div>'
+                </div></li>'
         }
                     
                     
         
-        html_footer = '</div>
+        html_footer = '</ul></div>
                 </div>
                 
             </div>
@@ -980,6 +988,7 @@ while true
                             // Hide sideNav
                             $(".button-collapse").sideNav("hide");
                         });
+                        Materialize.showStaggeredList("#staggered-test")
                     });
               </script>
             </body>
