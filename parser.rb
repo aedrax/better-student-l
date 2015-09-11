@@ -189,7 +189,7 @@ while true
           
           html = html_header + html_sidebar + html_middle_part + html_content + html_footer
           
-          File.open("index.html", 'w') { |file| file.write(html) }
+          File.open("/var/www/html/index.html", 'w') { |file| file.write(html) }
     end
     
     sleep(60)
