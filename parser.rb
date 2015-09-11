@@ -2,15 +2,14 @@ require 'gmail'
 
 while true
     
-    data = ""
-    
+    data = ""  
     
     gmail = Gmail.connect("betterstudentl@gmail.com", "passwordgoeshere")
     puts "Checking at..." + Time.now.to_s
     if gmail.logged_in?
         puts "Logged in successfully!"
         
-         #gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
+        #gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
         gmail.inbox.emails(:unread, :from => "onu-student-ld-request@lists.onu.edu").each { |email|
             puts "Processing new message at " + Time.now.to_s
             data = email.body.to_s
