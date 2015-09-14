@@ -94,6 +94,8 @@ while true
             # ugly patches
             # replace this string with the single quote
             result_string.gsub!(/=E2=80=99/,"'")
+            # replace this wtring with a -
+            result_string.gsub!(/=E2=80=93/,"-")
             
             content = {:header => header, :message => result_string}
             
