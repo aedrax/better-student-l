@@ -7,10 +7,55 @@ html {
     /*background-color: #ef6c00;*/
 }
 
-.side-nav a{
+ul.side-nav.fixed li a{
+    font-size: 1rem;
     width: 240px;
+    height: 64px;
+    line-height: 64px;
 }
 
 #staggered-test li {
     opacity: 0;
+}
+
+header, main, footer {
+    padding-left: 240px;
+  }
+
+  @media only screen and (max-width : 992px) {
+    header, main, footer {
+      padding-left: 0;
+    }
+  }
+  
+i {
+  color: black;
+}
+
+nav.top-nav {
+    height: 60px;
+    box-shadow: none;
+}
+
+a.button-collapse.top-nav.full {
+    line-height: 60px;
+}
+
+nav.top-nav a.page-title {
+    line-height: 60px;
+    font-size: 25px;
+}
+
+@media only screen and (max-width: 992px) {
+    nav .nav-wrapper {
+        /* text-align: center; */
+        text-align: left;
+        left: 15%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    a.button-collapse.top-nav {
+        left: 0%;
+    }
 }

@@ -4,13 +4,13 @@ while true
     
     data = ""  
     
-    gmail = Gmail.connect("betterstudentl@gmail.com", "passwordgoeshere")
+    gmail = Gmail.connect("betterstudentl@gmail.com", "moresecurepassword")
     puts "Checking at..." + Time.now.to_s
     if gmail.logged_in?
         puts "Logged in successfully!"
         
-        #gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
-        gmail.inbox.emails(:unread, :from => "onu-student-ld-request@lists.onu.edu").each { |email|
+        gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
+        #gmail.inbox.emails(:unread, :from => "onu-student-ld-request@lists.onu.edu").each { |email|
             puts "Processing new message at " + Time.now.to_s
             data = email.body.to_s
             email.read!
@@ -104,11 +104,13 @@ while true
           <html>
             <head>
               <!--Import materialize.css-->
-              <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+              <link href="css/prism.css" rel="stylesheet">
+              <link href="css/ghpages-materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
               <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
         
               <!--Let browser know website is optimized for mobile-->
               <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+              <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
               <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
               <title>A Better Student L Digest</title>
               <script>
@@ -121,16 +123,19 @@ while true
 		ga("send", "pageview");
 	      </script>
 	    </head>
+	    <body>
 	    <header>
-              <nav class="top-nav orange flow-text">
+            <nav class="top-nav orange flow-text">
                 <div class="container">
                   <div class="nav-wrapper">
 		    <a class="page-title black-text"><strong>A Better Student L Digest</strong></a>
 		  </div>
                 </div>
               </nav>
-	    </header>
-            <ul id="slide-out" class="side-nav fixed">'
+              <div class="container">
+                <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
+              </div>
+            <ul id="nav-mobile" class="side-nav fixed">'
               
         html_sidebar = ""
         
@@ -140,8 +145,8 @@ while true
           
         html_middle_part = 
 	   '</ul>
-            <a href="#" data-activates="slide-out" class="button-collapse"><i class="medium material-icons"></i></a>
-          
+            </header>
+          <main>
             <div class="container">
               <div class="row">
                 <div class="col s0 l3">&nbsp</div>
@@ -174,11 +179,13 @@ while true
 		  </div>
                 </div>
               </div>
-        
-              <body>
+                </main>
                 <!--Import jQuery before materialize.js-->
                 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-                <script type="text/javascript" src="js/materialize.min.js"></script>
+                <script src="js/jquery.timeago.min.js"></script>
+                <script src="js/prism.js"></script>
+                <script src="js/materialize.js"></script>
+                <script src="js/init.js"></script>
                 <script type="text/javascript">
                   // Initialize collapse button
                   $(".button-collapse").sideNav();
@@ -195,7 +202,8 @@ while true
           
             html = html_header + html_sidebar + html_middle_part + html_content + html_footer
           
-          File.open("/var/www/html/index.html", 'w') { |file| file.write(html) }
+          File.open("index.html", 'w') { |file| file.write(html) }
+          #File.open("/var/www/html/index.html", 'w') { |file| file.write(html) }
     end
     
     sleep(60)
