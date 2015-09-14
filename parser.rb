@@ -4,14 +4,14 @@ while true
     
     data = ""  
     
-    gmail = Gmail.connect("betterstudentl@gmail.com", "moresecurepassword")
-    puts "Checking at..." + Time.now.to_s
+    gmail = Gmail.connect("betterstudentl@gmail.com", "passwordgoeshere")
+    puts "Checking at..." + Time.now.localtime.to_s
     if gmail.logged_in?
         puts "Logged in successfully!"
         
-        gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
-        #gmail.inbox.emails(:unread, :from => "onu-student-ld-request@lists.onu.edu").each { |email|
-            puts "Processing new message at " + Time.now.to_s
+        #gmail.inbox.emails(:unread, :from => "p-sorensen@onu.edu").each { |email|
+        gmail.inbox.emails(:unread, :from => "onu-student-ld-request@lists.onu.edu").each { |email|
+            puts "Processing new message at " + Time.now.localtime.to_s
             data = email.body.to_s
             email.read!
         }
@@ -151,7 +151,14 @@ while true
               <div class="row">
                 <div class="col s0 l3">&nbsp</div>
                   <div class="col s12 l6">
-                    <ul id="staggered-test">'
+                    <ul id="staggered-test">
+                      <li>
+		                <div class="card grey lighten-1 hoverable">
+                          <div class="card-content">
+                            <p>Last Updated at: '+Time.now.localtime.to_s+'</p>
+                          </div>
+                        </div>
+		              </li>'
                     
                     
         html_content = ''            
@@ -202,8 +209,8 @@ while true
           
             html = html_header + html_sidebar + html_middle_part + html_content + html_footer
           
-          File.open("index.html", 'w') { |file| file.write(html) }
-          #File.open("/var/www/html/index.html", 'w') { |file| file.write(html) }
+          #File.open("index.html", 'w') { |file| file.write(html) }
+          File.open("/var/www/html/index.html", 'w') { |file| file.write(html) }
     end
     
     sleep(60)
