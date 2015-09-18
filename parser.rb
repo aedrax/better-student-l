@@ -103,7 +103,7 @@ while true
             # everyting here is just patching ascii errors where things just don't work
             
             # replace links with buttons
-            result_string.gsub!(/((http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?)/, '<a href="\1" class="waves-effect orange waves-light btn black-text">This Link</a>')
+            result_string.gsub!(/((http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?)/, '<a href="\1" class="waves-effect orange waves-light btn black-text">Link</a>')
             # ugly patches
             # replace this string with the single quote
             result_string.gsub!(/=E2=80=99/,"'")
