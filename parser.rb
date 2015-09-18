@@ -43,7 +43,12 @@ while true
            
            number = sections.slice!(0)
            contact = sections.slice!(-1)
-           subject = sections.join
+           # put the - back in the titles
+           subject = sections.join(" - ")
+           
+           if subject == ""
+              subject = "No Subject" 
+           end
            
            content = {:number => number, :subject => subject, :contact => contact}
         }
@@ -93,6 +98,10 @@ while true
                 
             end
             
+            
+            ##### BANDAID SECTION #####
+            # everyting here is just patching ascii errors where things just don't work
+            
             # replace links with buttons
             result_string.gsub!(/((http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?)/, '<a href="\1" class="waves-effect orange waves-light btn black-text">This Link</a>')
             # ugly patches
@@ -100,6 +109,9 @@ while true
             result_string.gsub!(/=E2=80=99/,"'")
             # replace this wtring with a -
             result_string.gsub!(/=E2=80=93/,"-")
+            # remove extra <> around links
+            result_string.gsub!(/<(\s+)?<a/,"<a")
+            result_string.gsub!(/\/a>(\s+)?>/,"/a>")
             
             content = {:header => header, :message => result_string}
             
