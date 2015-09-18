@@ -22,14 +22,18 @@ header, main, footer {
     padding-left: 240px;
   }
 
-  @media only screen and (max-width : 992px) {
+@media only screen and (max-width : 992px) {
     header, main, footer {
-      padding-left: 0;
+        padding-left: 0;
     }
-  }
+}
   
 i {
   color: black;
+}
+
+#menu-btn {
+    margin-left: 0rem;
 }
 
 nav.top-nav {
@@ -49,8 +53,7 @@ nav.top-nav a.page-title {
 @media only screen and (max-width: 992px) {
     nav .nav-wrapper {
         /* text-align: center; */
-        text-align: left;
-        left: 15%;
+        text-align: center;
     }
 }
 

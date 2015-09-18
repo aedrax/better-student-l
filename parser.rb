@@ -131,12 +131,12 @@ while true
             <nav class="top-nav orange flow-text">
                 <div class="container">
                   <div class="nav-wrapper">
-		    <a class="page-title black-text"><strong>A Better Student L Digest</strong></a>
+		    <a class="page-title black-text"><strong>A Better Student L</strong></a>
 		  </div>
                 </div>
               </nav>
               <div class="container">
-                <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
+                <a href="#" id="menu-btn" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
               </div>
             <ul id="nav-mobile" class="side-nav fixed">'
               
