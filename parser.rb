@@ -1,11 +1,14 @@
 require 'gmail'
 
+password = ""
+password = ARGV[0]
+
 begin
 while true
     
     data = ""  
     
-    gmail = Gmail.connect("betterstudentl@gmail.com", "mynewpasswordismoresecure")
+    gmail = Gmail.connect("betterstudentl@gmail.com", password)
     puts "Checking at..." + Time.now.localtime.to_s
     if gmail.logged_in?
         puts "Logged in successfully!"
