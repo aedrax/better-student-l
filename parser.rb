@@ -1,10 +1,11 @@
 require 'gmail'
 
+begin
 while true
     
     data = ""  
     
-    gmail = Gmail.connect("betterstudentl@gmail.com", "passwordgoeshere")
+    gmail = Gmail.connect("betterstudentl@gmail.com", "mynewpasswordismoresecure")
     puts "Checking at..." + Time.now.localtime.to_s
     if gmail.logged_in?
         puts "Logged in successfully!"
@@ -216,4 +217,8 @@ while true
     end
     
     sleep(60)
+end
+rescue Errno::ENETUNREACH
+    puts "NETWORK IS UNREACHABLE"
+    retry
 end
