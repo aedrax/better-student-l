@@ -34,7 +34,7 @@
               <div class="container">
                 <a href="#" id="menu-btn" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
               </div>
-            <ul id="nav-mobile" class="side-nav fixed"><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#1">Tuesday, Sept 29 - Hang Out @ Heterick (snacks provided!)</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#2">ONU SHIRTS!!! LAST WEEK!</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#3">Special Viva Maria Dine to Donate!</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#4">Habitat Hobble 5k</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#5">Grilled Cheese at Phi Gamma Melta</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#6">Freed Center is full of events this Homecoming weekend!</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#7">No Subject</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#8">THETA TWISTER TONIGHT</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#9">WORSHIP - September 24 @ 11am</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate" href="#10">GOT SWAG?</a></li></ul>
+            <ul id="nav-mobile" class="side-nav fixed"><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#1">Tuesday, Sept 29 - Hang Out @ Heterick (snacks provided!)</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#2">ONU SHIRTS!!! LAST WEEK!</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#3">Special Viva Maria Dine to Donate!</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#4">Habitat Hobble 5k</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#5">Grilled Cheese at Phi Gamma Melta</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#6">Freed Center is full of events this Homecoming weekend!</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#7">No Subject</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#8">THETA TWISTER TONIGHT</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#9">WORSHIP - September 24 @ 11am</a></li><li class="waves-effect waves-orange no-padding"><a class="truncate side-item" href="#10">GOT SWAG?</a></li></ul>
             </header>
           <main>
             <div class="container">
@@ -306,13 +306,15 @@ Newman Club - Outreach Chair
                 <script src="js/init.js"></script>
                 <script type="text/javascript">
                   // Initialize collapse button
-                  $(".button-collapse").sideNav();
                   $(document).ready(function(){
-                    $("a").click(function(){
+// 		    $(".button-collapse").sideNav();
+                    $(".side-item").click(function(){
                       // Hide sideNav
                       $(".button-collapse").sideNav("hide");
                     });
-                    Materialize.showStaggeredList("#staggered-test")
+                    Materialize.showStaggeredList("#staggered-test");
+
+
                   });
                 </script>
               </body>

@@ -159,7 +159,7 @@ while true
         html_sidebar = ""
         
         table_of_contents.map{ |content|
-            html_sidebar += '<li class="waves-effect waves-orange no-padding"><a class="truncate" href="#'+content[:number]+'">'+content[:subject]+'</a></li>'
+            html_sidebar += '<li class="waves-effect waves-orange no-padding side-item"><a class="truncate" href="#'+content[:number]+'">'+content[:subject]+'</a></li>'
         }
           
         html_middle_part = 
@@ -214,7 +214,7 @@ while true
                 <script src="js/init.js"></script>
                 <script type="text/javascript">
                   // Initialize collapse button
-                  $(".button-collapse").sideNav();
+                  //$(".button-collapse").sideNav();
                   $(document).ready(function(){
                     $("a").click(function(){
                       // Hide sideNav
