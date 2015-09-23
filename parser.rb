@@ -237,4 +237,9 @@ end
 rescue Errno::ENETUNREACH
     puts "NETWORK IS UNREACHABLE"
     retry
+rescue Net::IMAP::ByeResponseError
+    puts "ByeResponseError"
+    retry
+rescue e
+    puts e
 end
