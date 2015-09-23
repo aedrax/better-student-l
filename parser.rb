@@ -121,6 +121,7 @@ while true
 	'<!DOCTYPE html>
           <html>
             <head>
+	      <meta charset="utf-8" /> 
               <!--Import materialize.css-->
               <link href="css/prism.css" rel="stylesheet">
               <link href="css/ghpages-materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
