@@ -168,8 +168,7 @@ while true
           <main>
             <div class="container">
               <div class="row">
-                <div class="col s0 l3">&nbsp</div>
-                  <div class="col s12 l6">
+                  <div class="col s12 offset-l2 l8">
                     <ul id="staggered-test">
                       <li>
 		                <div class="card grey lighten-1 hoverable">
