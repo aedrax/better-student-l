@@ -239,6 +239,6 @@ rescue Errno::ENETUNREACH
 rescue Net::IMAP::ByeResponseError
     puts "ByeResponseError"
     retry
-rescue e
+rescue => e
     puts e
 end
