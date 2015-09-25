@@ -215,7 +215,7 @@ while true
                   // Initialize collapse button
                   //$(".button-collapse").sideNav();
                   $(document).ready(function(){
-                    $("a").click(function(){
+                    $(".side-item").click(function(){
                       // Hide sideNav
                       $(".button-collapse").sideNav("hide");
                     });
